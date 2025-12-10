@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كورسات MALK EL HAKEM</title>
+<style>
+body{margin:0;font-family:Arial;background:#0a0a0a;color:#fff;}
+header{background:#111;padding:25px;text-align:center;font-size:28px;font-weight:bold;color:#0aff9d;border-bottom:2px solid #222;}
+.container{padding:20px;max-width:900px;margin:auto;}
+.card{background:#111;padding:20px;border-radius:15px;margin-bottom:20px;border-left:4px solid #0aff9d;}
+.card h2{margin-top:0;color:#0aff9d;}
+button{padding:10px 15px;border:none;border-radius:8px;background:#0aff9d;color:black;cursor:pointer;font-weight:bold;margin-top:10px;}
+button:hover{background:#09c47a;}
+select,input{padding:10px;border-radius:8px;border:none;margin-top:10px;width:100%;background:#222;color:#0aff9d;}
+ul{padding-left:20px;}
+a{color:#0aff9d;text-decoration:none;}
+</style>
+</head>
+
+<body>
+<header>🎓 كورسات MALK EL HAKEM</header>
+
+<div class="container">
+
+<!-- اختيار المستوى -->
+<div class="card">
+<h2>اختيار المستوى</h2>
+<select id="levelSelect">
+<option value="beginner">مبتدئ</option>
+<option value="intermediate">متوسط</option>
+<option value="advanced">متقدم</option>
+</select>
+<button onclick="buildCourse()">اعرض الكورس المناسب</button>
+<div id="courseOutput" style="margin-top:15px;"></div>
+</div>
+
+<!-- إضافة كورسات -->
+<div class="card">
+<h2>إضافة كورس جديد</h2>
+<input type="text" id="courseName" placeholder="اسم الكورس">
+<input type="text" id="courseLink" placeholder="رابط الكورس">
+<button onclick="addCourse()">إضافة وحفظ الكورس</button>
+</div>
+
+<!-- قائمة الكورسات -->
+<div class="card">
+<h2>الكورسات المتاحة</h2>
+<ul id="courseList"></ul>
+</div>
+
+</div>
+
+<script>
+// كورسات جاهزة
+let courses = [
+    {name:"HTML & CSS للمبتدئين",link:"#",level:"beginner"},
+    {name:"JavaScript للمبتدئين",link:"#",level:"beginner"},
+    {name:"Python للمبتدئين",link:"#",level:"beginner"},
+    {name:"Python متوسط",link:"#",level:"intermediate"},
+    {name:"Java متوسط",link:"#",level:"intermediate"},
+    {name:"C++ متوسط",link:"#",level:"intermediate"},
+    {name:"Python متقدم",link:"#",level:"advanced"},
+    {name:"Java متقدم",link:"#",level:"advanced"},
+    {name:"Full-Stack Web Development",link:"#",level:"advanced"},
+];
+
+// تحميل الكورسات من LocalStorage إذا موجود
+if(localStorage.getItem("courses")){
+    courses = JSON.parse(localStorage.getItem("courses"));
+}
+
+// عرض كل الكورسات
+function renderCourses(){
+    const list = document.getElementById("courseList");
+    list.innerHTML = "";
+    courses.forEach(c=>{
+        let li = document.createElement("li");
+        li.innerHTML = `<a href="${c.link}" target="_blank">${c.name}</a> (${c.level})`;
+        list.appendChild(li);
+    });
+}
+
+// إضافة كورس جديد
+function addCourse(){
+    let name = document.getElementById("courseName").value;
+    let link = document.getElementById("courseLink").value;
+    if(name && link){
+        let level = "beginner"; // تلقائي للمبتدئين
+        courses.push({name,link,level});
+        localStorage.setItem("courses",JSON.stringify(courses));
+        renderCourses();
+        document.getElementById("courseName").value="";
+        document.getElementById("courseLink").value="";
+        alert("تم إضافة الكورس ✅");
+    }else{
+        alert("اكتب اسم الكورس والرابط!");
+    }
+}
+
+// بناء كورس حسب المستوى
+function buildCourse(){
+    let level = document.getElementById("levelSelect").value;
+    let filtered = courses.filter(c=>c.level===level);
+    let out = "<ul>";
+    filtered.forEach(c=>{
+        out+=`<li><a href="${c.link}" target="_blank">${c.name}</a></li>`;
+    });
+    out+="</ul>";
+    document.getElementById("courseOutput").innerHTML = out;
+}
+
+// أول تحميل
+renderCourses();
+</script>
+
+</body>
+</html>
