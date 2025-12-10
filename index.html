@@ -1,97 +1,60 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>MALK EL HAKEM LOGIN</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0d0d0d;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .login-box {
-            background: #111;
-            padding: 35px;
-            width: 350px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px #0aff9d;
-            text-align: center;
-        }
-        h2 {
-            margin-bottom: 25px;
-            color: #0aff9d;
-        }
-        input {
-            width: 90%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 8px;
-            background: #222;
-            color: #0aff9d;
-        }
-        button {
-            width: 95%;
-            padding: 12px;
-            background: #0aff9d;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 17px;
-        }
-        button:hover {
-            background: #09c47a;
-        }
-        .languages {
-            margin-top: 15px;
-        }
-        select {
-            padding: 8px;
-            border-radius: 8px;
-            background: #222;
-            color: #0aff9d
-        }
-    </style>
+<meta charset="UTF-8">
+<title>MALK EL HAKEM LOGIN</title>
+<style>
+body{margin:0;font-family:Arial;background:#0d0d0d;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;}
+.box{background:#111;padding:30px;border-radius:15px;box-shadow:0 0 15px #0aff9d;text-align:center;width:350px;}
+input, button{width:90%;padding:10px;margin:10px 0;border-radius:8px;border:none;}
+input{background:#222;color:#0aff9d;}
+button{background:#0aff9d;color:#000;font-weight:bold;cursor:pointer;}
+button:hover{background:#09c47a;}
+hr{border-color:#0aff9d;margin:20px 0;}
+</style>
 </head>
 <body>
 
-    <div class="login-box">
-        <h2>MALK EL HAKEM</h2>
-        <p>ELROMANI ELYOUTUBER</p>
+<div class="box">
+<h2>MALK EL HAKEM</h2>
+<p>ELROMANI ELYOUTUBER</p>
 
-        <input type="text" id="username" placeholder="اسم المستخدم">
-        <input type="password" id="password" placeholder="كلمة السر">
+<!-- تسجيل دخول -->
+<input type="text" id="user" placeholder="اسم المستخدم">
+<input type="password" id="pass" placeholder="كلمة السر">
+<button onclick="login()">تسجيل دخول</button>
 
-        <button onclick="login()">تسجيل دخول</button>
+<hr>
 
-        <div class="languages">
-            <select id="lang">
-                <option value="ar">العربية</option>
-                <option value="en">English</option>
-                <option value="ru">Русский</option>
-                <option value="fr">Français</option>
-                <option value="de">Deutsch</option>
-                <option value="es">Español</option>
-                <option value="tr">Türkçe</option>
-            </select>
-        </div>
-    </div>
+<!-- تسجيل حساب جديد -->
+<input type="text" id="regUser" placeholder="اسم المستخدم الجديد">
+<input type="password" id="regPass" placeholder="كلمة السر الجديدة">
+<button onclick="register()">إنشاء حساب</button>
+</div>
 
 <script>
-function login() {
-    let user = document.getElementById("username").value;
-    let pass = document.getElementById("password").value;
+// تسجيل مستخدم جديد
+function register() {
+    let username = document.getElementById("regUser").value;
+    let password = document.getElementById("regPass").value;
+    if(!username || !password){ alert("اكتب اسم المستخدم وكلمة السر!"); return; }
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
+    if(users.find(u=>u.username===username)){ alert("اسم المستخدم موجود بالفعل!"); return; }
+    users.push({username,password});
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("تم إنشاء الحساب ✅");
+}
 
-    // الأدمن الوحيد في النظام = أنت
-    if (user === "admin" && pass === "1234") {
+// تسجيل دخول
+function login() {
+    let username = document.getElementById("user").value;
+    let password = document.getElementById("pass").value;
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
+    let valid = users.find(u => u.username === username && u.password === password);
+    if(valid){
         window.location.href = "dashboard.html";
     } else {
-        alert("خطأ في تسجيل الدخول ❌");
+        alert("⚠ اسم المستخدم أو كلمة المرور خاطئة");
     }
 }
 </script>
