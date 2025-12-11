@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة تحكم MALK EL HAKEM</title>
+<title>لوحة تحكم DEVIL</title>
 <style>
 body{margin:0;font-family:Arial;background:#0a0a0a;color:#fff;}
 header{background:#111;padding:25px;text-align:center;font-size:28px;font-weight:bold;color:#0aff9d;border-bottom:2px solid #222;}
@@ -14,29 +14,64 @@ button{padding:10px 15px;border:none;border-radius:8px;background:#0aff9d;color:
 button:hover{background:#09c47a;}
 ul{padding-left:20px;}
 a{color:#0aff9d;text-decoration:none;}
+
+/* الديفيس الجديد */
+.devil-banner{
+    text-align:center;
+    padding:40px 20px 60px;
+    background:#000;
+}
+.devil-banner img{
+    width:320px;
+    max-width:90%;
+    border-radius:50%;
+    box-shadow:0 0 40px #ff0000;
+    margin-bottom:25px;
+}
+.devil-text{
+    font-size:58px;
+    font-weight:900;
+    color:#ff0000;
+    text-shadow: 
+        0 0 10px #ff0000,
+        0 0 20px #ff0000,
+        0 0 40px #ff0000,
+        0 0 80px #ff0000;
+    letter-spacing:8px;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:0.7;}
+}
 </style>
 </head>
-
 <body>
+
+<!-- الديفيس الجديد -->
+<div class="devil-banner">
+    <img src="https://files.catbox.moe/8zq9k8.png" alt="DEVIL">
+    <div class="devil-text">DEVIL ركب على السيستم</div>
+</div>
+
+<!-- باقي الموقع الأصلي زي ما هو -->
 <header>
 MALK EL HAKEM | ELROMANI ELYOUTUBER
 </header>
 
 <div class="container">
 
-<!-- معلومات التواصل -->
 <div class="card">
-<h2>📱 معلومات التواصل</h2>
+<h2>معلومات التواصل</h2>
 <ul>
-<li>TikTok: @malkalhakem11</li>
+<li>Telegram: @DEVIL_ELYOUTUBER</li>
 <li>Phone: 01095742216</li>
 <li>YouTube: <a href="https://www.youtube.com/@elromanielyoutuber" target="_blank">ELROMANI</a></li>
 </ul>
 </div>
 
-<!-- الأدوات -->
 <div class="card">
-<h2>🛠 الأدوات الجاهزة</h2>
+<h2>الأدوات الجاهزة</h2>
 <ul>
 <li>IP Lookup</li>
 <li>DNS Lookup</li>
@@ -56,9 +91,8 @@ MALK EL HAKEM | ELROMANI ELYOUTUBER
 <button onclick="alert('سيتم فتح صفحة الأدوات')">فتح الأدوات</button>
 </div>
 
-<!-- الكورسات -->
 <div class="card">
-<h2>🎓 الكورسات</h2>
+<h2>الكورسات</h2>
 <p>اضغط لإضافة كورس جديد أو اختيار مستوى المتقدم</p>
 <button onclick="window.location.href='courses.html'">إدارة الكورسات</button>
 </div>
