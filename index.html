@@ -72,6 +72,76 @@ function login() {
     }
 }
 </script>
+<script>
+// تحميل المستخدمين من LocalStorage
+let users = JSON.parse(localStorage.getItem("users")) || [
+    {user:"malkalhakem", pass:"malkmalk898", role:"admin"}
+];
 
+// إذا في "تذكرني" → يدخل تلقائي
+if(localStorage.getItem("autoLogin") === "yes"){
+    let u = localStorage.getItem("lastUser");
+    let found = users.find(x => x.user === u);
+    if(found){
+        directLogin(found);
+    }
+}
+
+// تسجيل دخول
+function login(){
+    let u = document.getElementById("user").value;
+    let p = document.getElementById("pass").value;
+    
+    let found = users.find(x => x.user === u && x.pass === p);
+
+    if(found){
+        if(document.getElementById("remember").checked){
+            localStorage.setItem("autoLogin","yes");
+            localStorage.setItem("lastUser",found.user);
+        }
+        directLogin(found);
+    } else {
+        alert("خطأ في البيانات!");
+    }
+}
+
+// توجيه حسب نوع المستخدم
+function directLogin(found){
+    if(found.role === "admin"){
+        window.location.href = "dashboard.html";
+    } else {
+        window.location.href = "tools.html";
+    }
+}
+
+// تسجيل حساب جديد
+function register(){
+    let u = document.getElementById("newUser").value;
+    let p = document.getElementById("newPass").value;
+
+    if(u.length < 3 || p.length < 3){
+        alert("البيانات قصيرة!");
+        return;
+    }
+
+    users.push({user:u, pass:p, role:"user"});
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("تم إنشاء الحساب!");
+    showLogin();
+}
+
+// عرض صفحة تسجيل الدخول
+function showLogin(){
+    document.getElementById("loginBox").style.display="block";
+    document.getElementById("registerBox").style.display="none";
+}
+
+// عرض صفحة إنشاء الحساب
+function showRegister(){
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("registerBox").style.display="block";
+}
+</script>
 </body>
 </html>
