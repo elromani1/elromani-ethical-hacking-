@@ -5,143 +5,106 @@
 <title>MALK EL HAKEM LOGIN</title>
 <style>
 body{margin:0;font-family:Arial;background:#0d0d0d;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;}
-.box{background:#111;padding:30px;border-radius:15px;box-shadow:0 0 15px #0aff9d;text-align:center;width:350px;}
+.box{background:#111;padding:30px;border-radius:15px;box-shadow:0 0 15px #0aff9d;text-align:center;width:350px;position:relative;}
 input, button{width:90%;padding:10px;margin:10px 0;border-radius:8px;border:none;}
 input{background:#222;color:#0aff9d;}
 button{background:#0aff9d;color:#000;font-weight:bold;cursor:pointer;}
 button:hover{background:#09c47a;}
 hr{border-color:#0aff9d;margin:20px 0;}
+.top-btn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:#007bff;
+    padding:8px 15px;
+    border-radius:8px;
+    color:#fff;
+    cursor:pointer;
+    font-weight:300;  /* خط رفيع */
+    font-size:14px;   /* حجم الخط صغير */
+}
 </style>
 </head>
 <body>
-<!-- ====== Login/Register Buttons (Safe Insert) ====== -->
-<div style="text-align:center; margin-top:20px;">
-    <a href="login.html" 
-       style="padding:10px 20px; background:#007bff; color:white; 
-              text-decoration:none; border-radius:6px; margin:5px; display:inline-block;">
-        تسجيل الدخول
-    </a>
 
-    <a href="register.html" 
-       style="padding:10px 20px; background:#28a745; color:white; 
-              text-decoration:none; border-radius:6px; margin:5px; display:inline-block;">
-        إنشاء حساب
-    </a>
-</div>
-<!-- ====== END ====== -->
 <div class="box">
 <h2>MALK EL HAKEM</h2>
 <p>ELROMANI ELYOUTUBER</p>
 
-<!-- تسجيل دخول -->
+<!-- زرار إنشاء حساب -->
+<button class="top-btn" onclick="showRegister()">Sign Up</button>
+
+<!-- Login Box -->
+<div id="loginBox">
 <input type="text" id="user" placeholder="اسم المستخدم">
 <input type="password" id="pass" placeholder="كلمة السر">
+<label><input type="checkbox" id="remember"> تذكرني</label>
 <button onclick="login()">تسجيل دخول</button>
+</div>
 
-<hr>
-
-<!-- تسجيل حساب جديد -->
-<input type="text" id="regUser" placeholder="اسم المستخدم الجديد">
-<input type="password" id="regPass" placeholder="كلمة السر الجديدة">
+<!-- Register Box (مخفي افتراضياً) -->
+<div id="registerBox" style="display:none;">
+<input type="text" id="newUser" placeholder="اسم المستخدم الجديد">
+<input type="password" id="newPass" placeholder="كلمة السر الجديدة">
 <button onclick="register()">إنشاء حساب</button>
+<button style="background:#6b7280" onclick="showLogin()">رجوع</button>
 </div>
 
 <script>
-// تسجيل مستخدم جديد
-function register() {
-    let username = document.getElementById("regUser").value;
-    let password = document.getElementById("regPass").value;
-    if(!username || !password){ alert("اكتب اسم المستخدم وكلمة السر!"); return; }
-    let users = JSON.parse(localStorage.getItem("users") || "[]");
-    if(users.find(u=>u.username===username)){ alert("اسم المستخدم موجود بالفعل!"); return; }
-    users.push({username,password});
-    localStorage.setItem("users", JSON.stringify(users));
-    alert("تم إنشاء الحساب ✅");
-}
-
-// تسجيل دخول
-function login() {
-    let username = document.getElementById("user").value;
-    let password = document.getElementById("pass").value;
-    let users = JSON.parse(localStorage.getItem("users") || "[]");
-    let valid = users.find(u => u.username === username && u.password === password);
-    if(valid){
-        window.location.href = "dashboard.html";
-    } else {
-        alert("⚠ اسم المستخدم أو كلمة المرور خاطئة");
-    }
-}
-</script>
-<script>
-// تحميل المستخدمين من LocalStorage
+// تحميل المستخدمين من LocalStorage أو إنشاء Admin
 let users = JSON.parse(localStorage.getItem("users")) || [
     {user:"malkalhakem", pass:"malkmalk898", role:"admin"}
 ];
 
-// إذا في "تذكرني" → يدخل تلقائي
-if(localStorage.getItem("autoLogin") === "yes"){
+// تذكرني → تسجيل دخول تلقائي
+if(localStorage.getItem("autoLogin")==="yes"){
     let u = localStorage.getItem("lastUser");
-    let found = users.find(x => x.user === u);
-    if(found){
-        directLogin(found);
-    }
+    let found = users.find(x=>x.user===u);
+    if(found) directLogin(found);
 }
 
 // تسجيل دخول
 function login(){
     let u = document.getElementById("user").value;
     let p = document.getElementById("pass").value;
-    
-    let found = users.find(x => x.user === u && x.pass === p);
-
+    let found = users.find(x=>x.user===u && x.pass===p);
     if(found){
         if(document.getElementById("remember").checked){
             localStorage.setItem("autoLogin","yes");
             localStorage.setItem("lastUser",found.user);
         }
         directLogin(found);
-    } else {
-        alert("خطأ في البيانات!");
-    }
+    } else { alert("⚠ اسم المستخدم أو كلمة المرور خاطئة"); }
 }
 
 // توجيه حسب نوع المستخدم
 function directLogin(found){
-    if(found.role === "admin"){
-        window.location.href = "dashboard.html";
-    } else {
-        window.location.href = "tools.html";
-    }
+    if(found.role==="admin") window.location.href="dashboard.html";
+    else window.location.href="tools.html";
 }
 
-// تسجيل حساب جديد
+// إنشاء حساب جديد
 function register(){
     let u = document.getElementById("newUser").value;
     let p = document.getElementById("newPass").value;
-
-    if(u.length < 3 || p.length < 3){
-        alert("البيانات قصيرة!");
-        return;
-    }
-
+    if(u.length<3||p.length<3){ alert("البيانات قصيرة!"); return; }
+    if(users.find(x=>x.user===u)){ alert("اسم المستخدم موجود بالفعل!"); return; }
     users.push({user:u, pass:p, role:"user"});
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("تم إنشاء الحساب!");
+    localStorage.setItem("users",JSON.stringify(users));
+    alert("تم إنشاء الحساب ✅");
     showLogin();
 }
 
-// عرض صفحة تسجيل الدخول
+// عرض/إخفاء
 function showLogin(){
     document.getElementById("loginBox").style.display="block";
     document.getElementById("registerBox").style.display="none";
 }
-
-// عرض صفحة إنشاء الحساب
 function showRegister(){
     document.getElementById("loginBox").style.display="none";
     document.getElementById("registerBox").style.display="block";
 }
 </script>
+
 </body>
 </html>
