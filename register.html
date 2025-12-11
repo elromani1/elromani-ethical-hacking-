@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>إنشاء حساب جديد</title>
+<style>
+body {
+    background: #0d0d0d;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.register-box {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+button {
+    width: 95%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.success {
+    color: #0af;
+    margin-top: 10px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="register-box">
+    <h2>إنشاء حساب جديد</h2>
+
+    <input type="text" id="username" placeholder="اسم المستخدم">
+    <input type="password" id="password" placeholder="كلمة المرور">
+
+    <button onclick="register()">إنشاء حساب</button>
+
+    <p class="success" id="msg"></p>
+
+    <p style="margin-top:15px;">
+        <a href="login.html" style="color:#0af;">تسجيل الدخول</a>
+    </p>
+</div>
+
+<script>
+function register() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+    let msg = document.getElementById("msg");
+
+    if (!user || !pass) {
+        msg.textContent = "⚠️ اكتب اسم مستخدم وكلمة مرور";
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+    if (users.find(u => u.username === user)) {
+        msg.textContent = "⚠️ اسم المستخدم موجود بالفعل";
+        return;
+    }
+
+    users.push({username: user, password: pass});
+    localStorage.setItem("users", JSON.stringify(users));
+
+    msg.textContent = "✔️ تم إنشاء الحساب بنجاح!";
+}
+</script>
+
+</body>
+</html>
