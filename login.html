@@ -95,4 +95,36 @@ function login() {
 </script>
 
 </body>
+    <!-- Login Page -->
+<input id="username" placeholder="اسم المستخدم">
+<input id="password" type="password" placeholder="كلمة المرور">
+<button onclick="login()">تسجيل دخول</button>
+<script>
+let users = [
+  {user:'malkalhakem', pass:'malkmalk898', role:'admin'}
+];
+
+// أضف أي حساب جديد هنا أو عبر تسجيل جديد
+function login() {
+  let u = document.getElementById('username').value;
+  let p = document.getElementById('password').value;
+
+  // تحقق من المستخدمين
+  let found = users.find(x => x.user===u && x.pass===p);
+  if(found){
+    alert('تم تسجيل الدخول!');
+    // لو Admin يدخل على Dashboard
+    if(found.role=='admin') window.location.href='dashboard.html';
+    else window.location.href='tools.html';
+  } else {
+    alert('حساب غير موجود، أنشئ حساب جديد أولاً');
+  }
+}
+
+// تسجيل حساب جديد
+function register(username, password){
+  users.push({user:username, pass:password, role:'user'});
+  alert('تم إنشاء الحساب! يمكنك تسجيل الدخول الآن');
+}
+</script>
 </html>
