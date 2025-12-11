@@ -20,8 +20,8 @@ hr{border-color:#0aff9d;margin:20px 0;}
     border-radius:8px;
     color:#fff;
     cursor:pointer;
-    font-weight:300;  /* خط رفيع */
-    font-size:14px;   /* حجم الخط صغير */
+    font-weight:300;  
+    font-size:14px;   
 }
 </style>
 </head>
@@ -51,10 +51,13 @@ hr{border-color:#0aff9d;margin:20px 0;}
 </div>
 
 <script>
-// تحميل المستخدمين من LocalStorage أو إنشاء Admin
-let users = JSON.parse(localStorage.getItem("users")) || [
-    {user:"malkalhakem", pass:"malkmalk898", role:"admin"}
-];
+// ======= تهيئة المستخدمين وAdmin =========
+let users = JSON.parse(localStorage.getItem("users")) || [];
+// تأكد وجود Admin
+if(!users.find(u=>u.user==="malkalhakem")){
+    users.push({user:"malkalhakem", pass:"malkmalk898", role:"admin"});
+}
+localStorage.setItem("users", JSON.stringify(users));
 
 // تذكرني → تسجيل دخول تلقائي
 if(localStorage.getItem("autoLogin")==="yes"){
@@ -63,7 +66,7 @@ if(localStorage.getItem("autoLogin")==="yes"){
     if(found) directLogin(found);
 }
 
-// تسجيل دخول
+// ======= دوال تسجيل الدخول =========
 function login(){
     let u = document.getElementById("user").value;
     let p = document.getElementById("pass").value;
@@ -83,7 +86,7 @@ function directLogin(found){
     else window.location.href="tools.html";
 }
 
-// إنشاء حساب جديد
+// ======= دوال تسجيل حساب جديد =========
 function register(){
     let u = document.getElementById("newUser").value;
     let p = document.getElementById("newPass").value;
@@ -95,7 +98,7 @@ function register(){
     showLogin();
 }
 
-// عرض/إخفاء
+// ======= دوال عرض/إخفاء =========
 function showLogin(){
     document.getElementById("loginBox").style.display="block";
     document.getElementById("registerBox").style.display="none";
