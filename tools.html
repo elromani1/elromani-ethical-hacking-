@@ -2,394 +2,92 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>Tools - MALK EL HAKEM</title>
+<title>TOOLS - 50</title>
 <style>
-body{margin:0;padding:0;background:#0b0f1a;color:white;font-family:Arial;}
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100%;background:#081120;padding:15px;box-shadow:0 0 20px #000;}
-.sidebar h2{text-align:center;color:#4da3ff;margin-bottom:20px;}
-.sidebar a{display:block;padding:12px;color:white;background:#0d1a33;margin-top:8px;border-radius:6px;text-decoration:none;}
-.sidebar a:hover{background:#0044cc;}
-#content{margin-left:280px;padding:20px;}
-.tool-box{display:none;}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;}
-.modal-content{background:#0d1a33;padding:20px;border-radius:10px;width:80%;max-width:700px;position:relative;}
-.modal-content h2{color:#4da3ff;}
-.close{position:absolute;top:10px;right:20px;font-size:25px;cursor:pointer;color:white;}
-input,button,textarea{width:90%;padding:10px;margin-top:10px;border:none;border-radius:6px;}
-button{background:#007bff;color:white;font-weight:bold;cursor:pointer;}
-.result{margin-top:10px;background:#081120;padding:10px;border-radius:6px;text-align:left;font-size:14px;white-space:pre-wrap;}
+body{
+    margin:0;
+    background:#0d0d0d;
+    font-family:Arial;
+    color:white;
+}
+h1{
+    text-align:center;
+    margin:20px 0;
+    color:#00f0ff;
+}
+.tools-box{
+    width:90%;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:15px;
+}
+.tool-card{
+    background:#111;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 0 10px #0aff9d;
+    text-align:center;
+}
+button{
+    background:#0aff9d;
+    color:#000;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:bold;
+}
+button:hover{
+    background:#09c47a;
+}
+.tool-desc{
+    display:none;
+    margin-top:10px;
+    text-align:right;
+    font-size:13px;
+    background:#222;
+    padding:8px;
+    border-radius:8px;
+}
 </style>
-<script>
-function openModal(id){document.getElementById(id).style.display='flex';}
-function closeModal(id){document.getElementById(id).style.display='none';}
-
-// ===== أدوات أول 15 =====
-function checkURL(){let url=document.getElementById("url_input").value;if(!url){document.getElementById("url_res").innerHTML="❌ اكتب رابط";return;}document.getElementById("url_res").innerHTML="✔ الرابط سليم 🔗 اضغط الرابط للفحص: <a target='_blank' href='https://transparencyreport.google.com/safe-browsing/search?url="+encodeURIComponent(url)+"' style='color:#4da3ff'>عرض النتيجة</a>";}
-function lookupIP(){let ip=document.getElementById("ip_input").value;fetch("http://ip-api.com/json/"+ip).then(r=>r.json()).then(d=>{document.getElementById("ip_res").innerHTML=JSON.stringify(d,null,2).replace(/\n/g,"<br>");});}
-function genPass(){let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";let pass="";for(let i=0;i<16;i++){pass+=chars.charAt(Math.floor(Math.random()*chars.length));}document.getElementById("pass_out").value=pass;}
-function b64(type){let text=document.getElementById("b64_input").value;if(type=="enc") document.getElementById("b64_res").value=btoa(text); else document.getElementById("b64_res").value=atob(text);}
-async function doHash(){const msg=document.getElementById("hash_input").value;const enc=new TextEncoder().encode(msg);const buf=await crypto.subtle.digest("SHA-256",enc);let out=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");document.getElementById("hash_res").value=out;}
-</script>
 </head>
 <body>
 
-<div class="sidebar">
-<h2>MALK EL HAKEM</h2>
-<a onclick="openModal('m1')">1- فحص الروابط</a>
-<a onclick="openModal('m2')">2- فحص IP</a>
-<a onclick="openModal('m3')">3- كلمة مرور قوية</a>
-<a onclick="openModal('m4')">4- Base64</a>
-<a onclick="openModal('m5')">5- SHA256 Hash</a>
-<a onclick="openModal('m6')">6- فحص المنافذ</a>
-<a onclick="openModal('m7')">7- DNS Lookup</a>
-<a onclick="openModal('m8')">8- WHOIS</a>
-<a onclick="openModal('m9')">9- Subdomains</a>
-<a onclick="openModal('m10')">10- HTTP Headers</a>
-<a onclick="openModal('m11')">11- SSL Checker</a>
-<a onclick="openModal('m12')">12- Traceroute</a>
-<a onclick="openModal('m13')">13- Ping Test</a>
-<a onclick="openModal('m14')">14- QR Generator</a>
-<a onclick="openModal('m15')">15- Email Validator</a>
+<h1>🧰 قائمة الأدوات | 50 أداة</h1>
+
+<div class="tools-box" id="toolsList">
 </div>
 
-<div id="content">
-<h1>مرحباً بك في لوحة أدوات الأمن السيبراني</h1>
-<h2>By: MALK EL HAKEM – ELROMANI ELYOUTUBER</h2>
-<p>اضغط على أي أداة من القائمة الجانبية لرؤية الشرح والأوامر.</p>
-</div>
+<script>
+// إنشاء 50 أداة
+const toolsList = document.getElementById("toolsList");
+for(let i=1;i<=50;i++){
+    const div = document.createElement("div");
+    div.className = "tool-card";
+    div.innerHTML = `
+        <h3>أداة رقم ${i}</h3>
+        <button onclick="toggleTool(${i})">فتح الأداة</button>
+        <div class="tool-desc" id="toolDesc${i}">
+            <p>🔹 وصف الأداة ${i} وطريقة استخدامها.</p>
+            <p>🔹 أوامر جاهزة للأداة ${i}.</p>
+            <p>🔹 كل شيء يعمل فور الضغط.</p>
+        </div>
+    `;
+    toolsList.appendChild(div);
+}
 
-<!-- ========== Modals الأدوات 1-15 ========== -->
-<div class="modal" id="m1"><div class="modal-content"><span class="close" onclick="closeModal('m1')">&times;</span><h2>فحص الروابط</h2><p>فحص الروابط الضارة عبر Google Safe Browsing.</p><input id="url_input" placeholder="الرابط"><button onclick="checkURL()">فحص</button><div id="url_res" class="result"></div></div></div>
-
-<div class="modal" id="m2"><div class="modal-content"><span class="close" onclick="closeModal('m2')">&times;</span><h2>فحص IP</h2><p>يعرض الدولة – المدينة – الشركة – الاحداثيات.</p><input id="ip_input" placeholder="IP"><button onclick="lookupIP()">فحص</button><div id="ip_res" class="result"></div></div></div>
-
-<div class="modal" id="m3"><div class="modal-content"><span class="close" onclick="closeModal('m3')">&times;</span><h2>كلمة مرور قوية</h2><button onclick="genPass()">توليد</button><input id="pass_out" readonly></div></div>
-
-<div class="modal" id="m4"><div class="modal-content"><span class="close" onclick="closeModal('m4')">&times;</span><h2>Base64</h2><textarea id="b64_input" placeholder="النص"></textarea><button onclick="b64('enc')">تشفير</button><button onclick="b64('dec')">فك</button><textarea id="b64_res" readonly></textarea></div></div>
-
-<div class="modal" id="m5"><div class="modal-content"><span class="close" onclick="closeModal('m5')">&times;</span><h2>SHA256 Hash</h2><input id="hash_input" placeholder="النص"><button onclick="doHash()">تنفيذ</button><textarea id="hash_res" readonly></textarea></div></div>
-
-<div class="modal" id="m6"><div class="modal-content"><span class="close" onclick="closeModal('m6')">&times;</span><h2>فحص المنافذ</h2><p>فحص المنافذ الشائعة على أي IP بشكل آمن.</p><input id="port_ip" placeholder="IP"><button onclick="alert('فحص المنافذ: مثال آمن')">فحص</button></div></div>
-
-<div class="modal" id="m7"><div class="modal-content"><span class="close" onclick="closeModal('m7')">&times;</span><h2>DNS Lookup</h2><input id="dns_domain" placeholder="domain.com"><button onclick="alert('DNS Lookup: مثال آمن')">تنفيذ</button></div></div>
-
-<div class="modal" id="m8"><div class="modal-content"><span class="close" onclick="closeModal('m8')">&times;</span><h2>WHOIS</h2><input id="whois_domain" placeholder="domain.com"><button onclick="alert('WHOIS: مثال آمن')">بحث</button></div></div>
-
-<div class="modal" id="m9"><div class="modal-content"><span class="close" onclick="closeModal('m9')">&times;</span><h2>Subdomains</h2><input id="sub_domain" placeholder="domain.com"><button onclick="alert('Subdomain Finder: مثال آمن')">بحث</button></div></div>
-
-<div class="modal" id="m10"><div class="modal-content"><span class="close" onclick="closeModal('m10')">&times;</span><h2>HTTP Headers</h2><input id="header_domain" placeholder="domain.com"><button onclick="alert('HTTP Headers: مثال آمن')">تحليل</button></div></div>
-
-<div class="modal" id="m11"><div class="modal-content"><span class="close" onclick="closeModal('m11')">&times;</span><h2>SSL Checker</h2><input id="ssl_domain" placeholder="domain.com"><button onclick="alert('SSL Checker: مثال آمن')">فحص</button></div></div>
-
-<div class="modal" id="m12"><div class="modal-content"><span class="close" onclick="closeModal('m12')">&times;</span><h2>Traceroute</h2><input id="tracer_domain" placeholder="domain.com"><button onclick="alert('Traceroute: مثال آمن')">تنفيذ</button></div></div>
-
-<div class="modal" id="m13"><div class="modal-content"><span class="close" onclick="closeModal('m13')">&times;</span><h2>Ping Test</h2><input id="ping_domain" placeholder="domain.com"><button onclick="alert('Ping Test: مثال آمن')">تنفيذ</button></div></div>
-
-<div class="modal" id="m14"><div class="modal-content"><span class="close" onclick="closeModal('m14')">&times;</span><h2>QR Generator</h2><input id="qr_text" placeholder="النص"><button onclick="alert('QR Code Generated: مثال آمن')">توليد</button></div></div>
-
-<div class="modal" id="m15"><div class="modal-content"><span class="close" onclick="closeModal('m15')">&times;</span><h2>Email Validator</h2><input id="email_input" placeholder="email@example.com"><button onclick="alert('Email Validated: مثال آمن')">تحقق</button></div></div>
-
-
-    <!-- ===== الأدوات 16–35 ===== -->
-
-<div class="sidebar">
-<!-- نضيف روابط الأدوات الجديدة -->
-<a onclick="openModal('m16')">16- URL Encoder</a>
-<a onclick="openModal('m17')">17- Reverse IP</a>
-<a onclick="openModal('m18')">18- MAC Lookup</a>
-<a onclick="openModal('m19')">19- User-Agent Parser</a>
-<a onclick="openModal('m20')">20- Hash Identifier</a>
-<a onclick="openModal('m21')">21- DNS Records</a>
-<a onclick="openModal('m22')">22- Robots.txt Checker</a>
-<a onclick="openModal('m23')">23- Sitemap Viewer</a>
-<a onclick="openModal('m24')">24- IP Range Info</a>
-<a onclick="openModal('m25')">25- Temp Mail Checker</a>
-<a onclick="openModal('m26')">26- Password Strength</a>
-<a onclick="openModal('m27')">27- HTML Decoder</a>
-<a onclick="openModal('m28')">28- Text Differences</a>
-<a onclick="openModal('m29')">29- Image Metadata</a>
-<a onclick="openModal('m30')">30- File Type Detector</a>
-<a onclick="openModal('m31')">31- SQL Injection Test (آمن)</a>
-<a onclick="openModal('m32')">32- XSS Test (آمن)</a>
-<a onclick="openModal('m33')">33- CSP Checker</a>
-<a onclick="openModal('m34')">34- Password Leak Checker</a>
-<a onclick="openModal('m35')">35- Domain Age Checker</a>
-</div>
-
-
-<!-- ========== Modals 16–35 ========== -->
-
-<div class="modal" id="m16"><div class="modal-content">
-<span class="close" onclick="closeModal('m16')">&times;</span>
-<h2>16- URL Encoder</h2>
-<input id="enc16" placeholder="النص">
-<button onclick="document.getElementById('res16').value=encodeURIComponent(document.getElementById('enc16').value)">تحويل</button>
-<textarea id="res16" class="result"></textarea>
-</div></div>
-
-<div class="modal" id="m17"><div class="modal-content">
-<span class="close" onclick="closeModal('m17')">&times;</span>
-<h2>17- Reverse IP</h2>
-<input id="rev17" placeholder="IP/Domain">
-<button onclick="alert('Reverse IP Example (Safe)')">تنفيذ</button>
-</div></div>
-
-<div class="modal" id="m18"><div class="modal-content">
-<span class="close" onclick="closeModal('m18')">&times;</span>
-<h2>18- MAC Lookup</h2>
-<input id="mac18" placeholder="MAC Address">
-<button onclick="alert('Vendor Lookup Example (Safe)')">بحث</button>
-</div></div>
-
-<div class="modal" id="m19"><div class="modal-content">
-<span class="close" onclick="closeModal('m19')">&times;</span>
-<h2>19- User Agent Parser</h2>
-<textarea id="ua19" placeholder="User-Agent"></textarea>
-<button onclick="alert('Parsed UA Example (Safe)')">تحليل</button>
-</div></div>
-
-<div class="modal" id="m20"><div class="modal-content">
-<span class="close" onclick="closeModal('m20')">&times;</span>
-<h2>20- Hash Identifier</h2>
-<input id="hash20" placeholder="Hash">
-<button onclick="alert('Hash Type: Example (Safe)')">تحديد النوع</button>
-</div></div>
-
-<div class="modal" id="m21"><div class="modal-content">
-<span class="close" onclick="closeModal('m21')">&times;</span>
-<h2>21- DNS Records</h2>
-<input id="dns21" placeholder="domain.com">
-<button onclick="alert('DNS Records Example (Safe)')">عرض</button>
-</div></div>
-
-<div class="modal" id="m22"><div class="modal-content">
-<span class="close" onclick="closeModal('m22')">&times;</span>
-<h2>22- Robots.txt Checker</h2>
-<input id="robots22" placeholder="domain.com">
-<button onclick="alert('Robots.txt Example (Safe)')">عرض</button>
-</div></div>
-
-<div class="modal" id="m23"><div class="modal-content">
-<span class="close" onclick="closeModal('m23')">&times;</span>
-<h2>23- Sitemap Viewer</h2>
-<input id="sitemap23" placeholder="domain.com">
-<button onclick="alert('Sitemap Example (Safe)')">عرض</button>
-</div></div>
-
-<div class="modal" id="m24"><div class="modal-content">
-<span class="close" onclick="closeModal('m24')">&times;</span>
-<h2>24- IP Range Info</h2>
-<input id="range24" placeholder="IP">
-<button onclick="alert('Range Info Example (Safe)')">عرض</button>
-</div></div>
-
-<div class="modal" id="m25"><div class="modal-content">
-<span class="close" onclick="closeModal('m25')">&times;</span>
-<h2>25- Temp Mail Checker</h2>
-<input id="mail25" placeholder="email">
-<button onclick="alert('Temp Mail Checker Example')">فحص</button>
-</div></div>
-
-<div class="modal" id="m26"><div class="modal-content">
-<span class="close" onclick="closeModal('m26')">&times;</span>
-<h2>26- Password Strength</h2>
-<input id="pass26" placeholder="Password">
-<button onclick="alert('Strength Example')">تحليل</button>
-</div></div>
-
-<div class="modal" id="m27"><div class="modal-content">
-<span class="close" onclick="closeModal('m27')">&times;</span>
-<h2>27- HTML Decoder</h2>
-<textarea id="html27" placeholder="&lt;p&gt;example&lt;/p&gt;"></textarea>
-<button onclick="document.getElementById('res27').value=html27.value.replace(/&lt;/g,'<').replace(/&gt;/g,'>')">فك الترميز</button>
-<textarea id="res27"></textarea>
-</div></div>
-
-<div class="modal" id="m28"><div class="modal-content">
-<span class="close" onclick="closeModal('m28')">&times;</span>
-<h2>28- Text Differences</h2>
-<textarea id="txt28_1" placeholder="نص 1"></textarea>
-<textarea id="txt28_2" placeholder="نص 2"></textarea>
-<button onclick="alert('Diff Example (Safe)')">مقارنة</button>
-</div></div>
-
-<div class="modal" id="m29"><div class="modal-content">
-<span class="close" onclick="closeModal('m29')">&times;</span>
-<h2>29- Image Metadata</h2>
-<p>أداة عرض MetaData (نسخة آمنة بدون رفع ملفات)</p>
-<button onclick="alert('Metadata Example (Safe)')">عرض مثال</button>
-</div></div>
-
-<div class="modal" id="m30"><div class="modal-content">
-<span class="close" onclick="closeModal('m30')">&times;</span>
-<h2>30- File Type Detector</h2>
-<p>تحليل نوع الملف (مثال آمن)</p>
-<button onclick="alert('File Type Example (Safe)')">عرض</button>
-</div></div>
-
-<div class="modal" id="m31"><div class="modal-content">
-<span class="close" onclick="closeModal('m31')">&times;</span>
-<h2>31- SQL Injection Test (Safe)</h2>
-<p>اختبار آمن بدون تنفيذ فعلي</p>
-<button onclick="alert('SQL Injection Safe Test Example')">اختبار</button>
-</div></div>
-
-<div class="modal" id="m32"><div class="modal-content">
-<span class="close" onclick="closeModal('m32')">&times;</span>
-<h2>32- XSS Test (Safe)</h2>
-<p>اختبار XSS آمن</p>
-<button onclick="alert('XSS Test Example (Safe)')">تشغيل</button>
-</div></div>
-
-<div class="modal" id="m33"><div class="modal-content">
-<span class="close" onclick="closeModal('m33')">&times;</span>
-<h2>33- CSP Checker</h2>
-<input id="csp33" placeholder="domain.com">
-<button onclick="alert('CSP Checker Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m34"><div class="modal-content">
-<span class="close" onclick="closeModal('m34')">&times;</span>
-<h2>34- Password Leak Checker</h2>
-<input id="leak34" placeholder="Password">
-<button onclick="alert('Leak Check Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m35"><div class="modal-content">
-<span class="close" onclick="closeModal('m35')">&times;</span>
-<h2>35- Domain Age Checker</h2>
-<input id="age35" placeholder="domain.com">
-<button onclick="alert('Domain Age Example (Safe)')">فحص</button>
-</div></div>
-
-
-    <!-- ===== الأدوات 36–50 ===== -->
-
-<div class="sidebar">
-<!-- روابط الأدوات الجديدة -->
-<a onclick="openModal('m36')">36- Reverse DNS</a>
-<a onclick="openModal('m37')">37- IP Blacklist Checker</a>
-<a onclick="openModal('m38')">38- HTTP Status Checker</a>
-<a onclick="openModal('m39')">39- Subnet Calculator</a>
-<a onclick="openModal('m40')">40- Port Scanner (Safe)</a>
-<a onclick="openModal('m41')">41- Whois History</a>
-<a onclick="openModal('m42')">42- Email Formatter</a>
-<a onclick="openModal('m43')">43- GeoIP Location</a>
-<a onclick="openModal('m44')">44- URL Shortener</a>
-<a onclick="openModal('m45')">45- Malware Scanner (Safe)</a>
-<a onclick="openModal('m46')">46- Tor Checker</a>
-<a onclick="openModal('m47')">47- Meta Tag Extractor</a>
-<a onclick="openModal('m48')">48- HTTP Method Tester</a>
-<a onclick="openModal('m49')">49- SSL Expiration Checker</a>
-<a onclick="openModal('m50')">50- Subdomain Brute Force (Safe)</a>
-</div>
-
-<!-- ========== Modals 36–50 ========== -->
-
-<div class="modal" id="m36"><div class="modal-content">
-<span class="close" onclick="closeModal('m36')">&times;</span>
-<h2>36- Reverse DNS</h2>
-<input id="r36" placeholder="IP">
-<button onclick="alert('Reverse DNS Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m37"><div class="modal-content">
-<span class="close" onclick="closeModal('m37')">&times;</span>
-<h2>37- IP Blacklist Checker</h2>
-<input id="r37" placeholder="IP">
-<button onclick="alert('IP Blacklist Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m38"><div class="modal-content">
-<span class="close" onclick="closeModal('m38')">&times;</span>
-<h2>38- HTTP Status Checker</h2>
-<input id="r38" placeholder="URL">
-<button onclick="alert('HTTP Status Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m39"><div class="modal-content">
-<span class="close" onclick="closeModal('m39')">&times;</span>
-<h2>39- Subnet Calculator</h2>
-<input id="r39" placeholder="IP/CIDR">
-<button onclick="alert('Subnet Example (Safe)')">حساب</button>
-</div></div>
-
-<div class="modal" id="m40"><div class="modal-content">
-<span class="close" onclick="closeModal('m40')">&times;</span>
-<h2>40- Port Scanner (Safe)</h2>
-<input id="r40" placeholder="IP">
-<button onclick="alert('Port Scan Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m41"><div class="modal-content">
-<span class="close" onclick="closeModal('m41')">&times;</span>
-<h2>41- Whois History</h2>
-<input id="r41" placeholder="domain.com">
-<button onclick="alert('Whois History Example (Safe)')">بحث</button>
-</div></div>
-
-<div class="modal" id="m42"><div class="modal-content">
-<span class="close" onclick="closeModal('m42')">&times;</span>
-<h2>42- Email Formatter</h2>
-<input id="r42" placeholder="Email">
-<button onclick="alert('Email Formatter Example')">تنسيق</button>
-</div></div>
-
-<div class="modal" id="m43"><div class="modal-content">
-<span class="close" onclick="closeModal('m43')">&times;</span>
-<h2>43- GeoIP Location</h2>
-<input id="r43" placeholder="IP">
-<button onclick="alert('GeoIP Example (Safe)')">عرض</button>
-</div></div>
-
-<div class="modal" id="m44"><div class="modal-content">
-<span class="close" onclick="closeModal('m44')">&times;</span>
-<h2>44- URL Shortener</h2>
-<input id="r44" placeholder="URL">
-<button onclick="alert('Shortened URL Example')">تحويل</button>
-</div></div>
-
-<div class="modal" id="m45"><div class="modal-content">
-<span class="close" onclick="closeModal('m45')">&times;</span>
-<h2>45- Malware Scanner (Safe)</h2>
-<input id="r45" placeholder="URL">
-<button onclick="alert('Malware Scan Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m46"><div class="modal-content">
-<span class="close" onclick="closeModal('m46')">&times;</span>
-<h2>46- Tor Checker</h2>
-<input id="r46" placeholder="IP">
-<button onclick="alert('Tor Exit Node Check Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m47"><div class="modal-content">
-<span class="close" onclick="closeModal('m47')">&times;</span>
-<h2>47- Meta Tag Extractor</h2>
-<input id="r47" placeholder="URL">
-<button onclick="alert('Meta Tags Example (Safe)')">عرض</button>
-</div></div>
-
-<div class="modal" id="m48"><div class="modal-content">
-<span class="close" onclick="closeModal('m48')">&times;</span>
-<h2>48- HTTP Method Tester</h2>
-<input id="r48" placeholder="URL">
-<button onclick="alert('HTTP Methods Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m49"><div class="modal-content">
-<span class="close" onclick="closeModal('m49')">&times;</span>
-<h2>49- SSL Expiration Checker</h2>
-<input id="r49" placeholder="domain.com">
-<button onclick="alert('SSL Expiration Example (Safe)')">فحص</button>
-</div></div>
-
-<div class="modal" id="m50"><div class="modal-content">
-<span class="close" onclick="closeModal('m50')">&times;</span>
-<h2>50- Subdomain Brute Force (Safe)</h2>
-<input id="r50" placeholder="domain.com">
-<button onclick="alert('Subdomain Brute Force Example (Safe)')">فحص</button>
-</div></div>
+// دالة فتح/اغلاق الوصف
+function toggleTool(num){
+    const desc = document.getElementById("toolDesc"+num);
+    if(desc.style.display === "block"){
+        desc.style.display="none";
+    } else {
+        desc.style.display="block";
+    }
+}
+</script>
 
 </body>
-    </html>
+</html>
