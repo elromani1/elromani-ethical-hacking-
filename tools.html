@@ -2,152 +2,67 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>أدوات MALK EL HAKEM</title>
+<title>الأدوات - لوحة تحكم الأدمن</title>
 <style>
-body{margin:0;background:#0c0c0c;color:#fff;font-family:Arial;}
-header{background:#111;padding:20px;text-align:center;font-size:26px;color:#0aff9d;border-bottom:2px solid #222;}
-.container{padding:20px;max-width:900px;margin:auto;}
-.tool{background:#111;padding:20px;margin-bottom:20px;border-radius:15px;border-right:4px solid #0aff9d;}
-.tool h2{margin-top:0;color:#0aff9d;}
-textarea,input{width:100%;padding:10px;border:none;border-radius:8px;background:#1c1c1c;color:#0aff9d;margin-top:10px;}
-button{padding:10px 15px;background:#0aff9d;border:none;border-radius:8px;margin-top:10px;cursor:pointer;color:#000;font-weight:bold;}
-button:hover{background:#09c47a;}
-.output{margin-top:10px;padding:10px;background:#1c1c1c;border-radius:8px;min-height:40px;color:#0aff9d;}
+body {
+    background: #0d0d0d;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 { color: #0aff8a; }
+
+.box {
+    background: #111;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 15px 0;
+}
+
+a {
+    color: #0aff8a;
+    text-decoration: none;
+}
+
+button {
+    padding: 8px 15px;
+    background: #0aff8a;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover { background: #0cd475; }
+
+ul { list-style: none; padding: 0; }
+li { margin: 10px 0; }
 </style>
 </head>
-
 <body>
 
-<header>🛠 أدوات MALK EL HAKEM</header>
+<h1>🔧 الأدوات</h1>
 
-<div class="container">
-
-<!-- IP Lookup -->
-<div class="tool">
-<h2>🔍 IP Lookup</h2>
-<input id="ipInput" placeholder="اكتب IP">
-<button onclick="lookupIP()">بحث</button>
-<div id="ipResult" class="output"></div>
+<div class="box">
+    <h2>قائمة الأدوات</h2>
+    <ul>
+        <li><a href="tool1.html">أداة 1</a></li>
+        <li><a href="tool2.html">أداة 2</a></li>
+        <li><a href="tool3.html">أداة 3</a></li>
+        <!-- ممكن تضيف أي عدد أدوات هنا -->
+    </ul>
 </div>
 
-<!-- Base64 Encode/Decode -->
-<div class="tool">
-<h2>🔐 Base64 Encode / Decode</h2>
-<textarea id="b64Text" placeholder="اكتب النص هنا"></textarea>
-<button onclick="encodeBase64()">Encode</button>
-<button onclick="decodeBase64()">Decode</button>
-<div id="b64Result" class="output"></div>
-</div>
-
-<!-- Random Password -->
-<div class="tool">
-<h2>🔑 مولد كلمات مرور</h2>
-<button onclick="genPass()">توليد كلمة مرور قوية</button>
-<div id="passResult" class="output"></div>
-</div>
-
-<!-- Hash Generator -->
-<div class="tool">
-<h2>🔒 Hash Generator (MD5 / SHA1 / SHA256)</h2>
-<textarea id="hashInput" placeholder="النص..."></textarea>
-<button onclick="makeHash('MD5')">MD5</button>
-<button onclick="makeHash('SHA-1')">SHA1</button>
-<button onclick="makeHash('SHA-256')">SHA256</button>
-<div id="hashResult" class="output"></div>
-</div>
-
-<!-- URL Encode Decode -->
-<div class="tool">
-<h2>🌐 URL Encode / Decode</h2>
-<textarea id="urlText"></textarea>
-<button onclick="encodeURL()">Encode</button>
-<button onclick="decodeURL()">Decode</button>
-<div id="urlResult" class="output"></div>
-</div>
-
-<!-- JSON Formatter -->
-<div class="tool">
-<h2>📜 JSON Formatter</h2>
-<textarea id="jsonInput"></textarea>
-<button onclick="formatJSON()">تنسيق</button>
-<div id="jsonResult" class="output"></div>
-</div>
-
-<!-- QR Code -->
-<div class="tool">
-<h2>📷 QR Code Generator</h2>
-<textarea id="qrText" placeholder="النص أو الرابط"></textarea>
-<button onclick="makeQR()">إنشاء QR</button>
-<div id="qrOutput" class="output"></div>
-</div>
-
+<div class="box">
+    <a href="dashboard.html"><button>العودة للوحة التحكم</button></a>
 </div>
 
 <script>
-// IP Lookup (API مجاني)
-function lookupIP(){
-    let ip=document.getElementById("ipInput").value;
-    fetch(`https://ipapi.co/${ip}/json/`)
-    .then(res=>res.json())
-    .then(data=>{
-        document.getElementById("ipResult").innerText =
-        JSON.stringify(data,null,2);
-    });
-}
-
-// Base64
-function encodeBase64(){
-    let txt=document.getElementById("b64Text").value;
-    document.getElementById("b64Result").innerText = btoa(txt);
-}
-function decodeBase64(){
-    let txt=document.getElementById("b64Text").value;
-    try{
-        document.getElementById("b64Result").innerText = atob(txt);
-    }catch{ document.getElementById("b64Result").innerText="❌ خطأ"; }
-}
-
-// Password Generator
-function genPass(){
-    let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-    let pass="";
-    for(let i=0;i<16;i++) pass+=chars[Math.floor(Math.random()*chars.length)];
-    document.getElementById("passResult").innerText=pass;
-}
-
-// Hash Generator
-async function makeHash(type){
-    let txt=document.getElementById("hashInput").value;
-    const enc=new TextEncoder().encode(txt);
-    const digest=await crypto.subtle.digest(type,enc);
-    let hex=Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    document.getElementById("hashResult").innerText = hex;
-}
-
-// URL Encode Decode
-function encodeURL(){
-    document.getElementById("urlResult").innerText =
-    encodeURIComponent(document.getElementById("urlText").value);
-}
-function decodeURL(){
-    document.getElementById("urlResult").innerText =
-    decodeURIComponent(document.getElementById("urlText").value);
-}
-
-// JSON Formatter
-function formatJSON(){
-    try{
-        let j=JSON.parse(document.getElementById("jsonInput").value);
-        document.getElementById("jsonResult").innerText =
-        JSON.stringify(j,null,2);
-    }catch{ document.getElementById("jsonResult").innerText="❌ JSON غير صالح"; }
-}
-
-// QR Code
-function makeQR(){
-    let txt=document.getElementById("qrText").value;
-    document.getElementById("qrOutput").innerHTML =
-    `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(txt)}">`;
+// حماية الأدمن
+if (!sessionStorage.getItem("role") || sessionStorage.getItem("role") !== "admin") {
+    alert("❌ غير مسموح لك بالدخول");
+    window.location.href = "index.html";
 }
 </script>
 
