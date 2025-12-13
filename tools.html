@@ -2,7 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>MALK EL HAKEM | EL ROMANI ELYOUTOPER
+
+<title>MALK EL HAKEM | EL ROMANI ELYOUTOPER</title>
+
 <style>
 body{
     margin:0;
@@ -76,204 +78,74 @@ footer a{
 <body>
 
 <header>
-🛡 MALK EL HAKEM – elromani elyoutuber
+🛡 MALK EL HAKEM – elromani elyoutuber  
 <br>Ethical Hacking & Cyber Security Tools
 </header>
 
 <div class="container">
 
 <!-- 1 -->
-<div class="tool"><h3>1️⃣ فحص رابط (Basic)</h3>
+<div class="tool">
+<h3>1️⃣ فحص رابط</h3>
 <input id="url1">
-<button onclick="r1.innerText=url1.value.startsWith('https')?'Safe':'not Safe'">فحص</button>
-<div class="result" id="r1"></div></div>
+<button onclick="r1.innerText = url1.value.startsWith('https://') ? 'Safe' : 'Not Safe'">فحص</button>
+<div class="result" id="r1"></div>
+</div>
 
 <!-- 2 -->
-<div class="tool"><h3>2️⃣ فحص IP</h3>
+<div class="tool">
+<h3>2️⃣ فحص IP</h3>
 <input id="ip2">
-<button onclick="r2.innerText=/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ip2.value)?'IP righteous':'IP not righteous'">فحص</button>
-<div class="result" id="r2"></div></div>
+<button onclick="r2.innerText=/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ip2.value)?'IP صحيح':'IP غير صحيح'">فحص</button>
+<div class="result" id="r2"></div>
+</div>
 
 <!-- 3 -->
-<div class="tool"><h3>3️⃣ توليد كلمة مرور قوية</h3>
-<button onclick="r3.innerText=Array.from({length:12},()=> 'Aa1!@#$%'.charAt(Math.random()*8|0)).join('')">توليد</button>
-<div class="result" id="r3"></div></div>
+<div class="tool">
+<h3>3️⃣ توليد كلمة مرور قوية</h3>
+<button onclick="r3.innerText = Array.from({length:12},()=> 'Aa1!@#$%'.charAt(Math.random()*8|0)).join('')">توليد</button>
+<div class="result" id="r3"></div>
+</div>
 
 <!-- 4 -->
-<div class="tool"><h3>4️⃣ فحص قوة كلمة المرور</h3>
+<div class="tool">
+<h3>4️⃣ فحص قوة كلمة المرور</h3>
 <input id="p4">
-<button onclick="r4.innerText=p4.value.length>=8?'قوية':'ضعيفة'">فحص</button>
-<div class="result" id="r4"></div></div>
+<button onclick="r4.innerText = p4.value.length>=8 ? 'قوية' : 'ضعيفة'">فحص</button>
+<div class="result" id="r4"></div>
+</div>
 
 <!-- 5 -->
-<div class="tool"><h3>5️⃣ Base64 Encode</h3>
+<div class="tool">
+<h3>5️⃣ Base64 Encode</h3>
 <textarea id="t5"></textarea>
-<button onclick="r5.innerText=btoa(t5.value)">تحويل</button>
-<div class="result" id="r5"></div></div>
+<button onclick="r5.innerText = btoa(unescape(encodeURIComponent(t5.value)))">تحويل</button>
+<div class="result" id="r5"></div>
+</div>
 
 <!-- 6 -->
-<div class="tool"><h3>6️⃣ Base64 Decode</h3>
+<div class="tool">
+<h3>6️⃣ Base64 Decode</h3>
 <textarea id="t6"></textarea>
-<button onclick="r6.innerText=atob(t6.value)">تحويل</button>
-<div class="result" id="r6"></div></div>
+<button onclick="r6.innerText = decodeURIComponent(escape(atob(t6.value)))">تحويل</button>
+<div class="result" id="r6"></div>
+</div>
 
 <!-- 7 -->
-<div class="tool"><h3>7️⃣ SHA-256 Hash</h3>
+<div class="tool">
+<h3>7️⃣ SHA-256 Hash</h3>
 <textarea id="t7"></textarea>
 <button onclick="hash256()">Generate</button>
-<div class="result" id="r7"></div></div>
+<div class="result" id="r7"></div>
+</div>
 
 <!-- 8 -->
-<div class="tool"><h3>8️⃣ Email Validator</h3>
+<div class="tool">
+<h3>8️⃣ Email Validator</h3>
 <input id="t8">
 <button onclick="r8.innerText=/\S+@\S+\.\S+/.test(t8.value)?'صحيح':'خطأ'">فحص</button>
-<div class="result" id="r8"></div></div>
-
-<!-- 9 -->
-<div class="tool"><h3>9️⃣ URL Decode</h3>
-<textarea id="t9"></textarea>
-<button onclick="r9.innerText=decodeURIComponent(t9.value)">Decode</button>
-<div class="result" id="r9"></div></div>
-
-<!-- 10 -->
-<div class="tool"><h3>🔟 Text Analyzer</h3>
-<textarea id="t10"></textarea>
-<button onclick="r10.innerText='حروف: '+t10.value.length+'\nكلمات: '+t10.value.split(/\s+/).length">تحليل</button>
-<div class="result" id="r10"></div></div>
-
-<!-- 11 -->
-<div class="tool"><h3>11️⃣ UUID Generator</h3>
-<button onclick="r11.innerText=crypto.randomUUID()">Generate</button>
-<div class="result" id="r11"></div></div>
-
-<!-- 12 -->
-<div class="tool"><h3>12️⃣ Timestamp</h3>
-<button onclick="r12.innerText=Math.floor(Date.now()/1000)">Generate</button>
-<div class="result" id="r12"></div></div>
-
-<!-- 13 -->
-<div class="tool"><h3>13️⃣ Reverse Text</h3>
-<input id="t13">
-<button onclick="r13.innerText=t13.value.split('').reverse().join('')">عكس</button>
-<div class="result" id="r13"></div></div>
-
-<!-- 14 -->
-<div class="tool"><h3>14️⃣ Uppercase</h3>
-<input id="t14">
-<button onclick="r14.innerText=t14.value.toUpperCase()">تحويل</button>
-<div class="result" id="r14"></div></div>
-
-<!-- 15 -->
-<div class="tool"><h3>15️⃣ Lowercase</h3>
-<input id="t15">
-<button onclick="r15.innerText=t15.value.toLowerCase()">تحويل</button>
-<div class="result" id="r15"></div></div>
-
-<!-- 16 -->
-<div class="tool"><h3>16️⃣ Remove Spaces</h3>
-<input id="t16">
-<button onclick="r16.innerText=t16.value.replace(/\s+/g,'')">تنفيذ</button>
-<div class="result" id="r16"></div></div>
-
-<!-- 17 -->
-<div class="tool"><h3>17️⃣ JSON Validator</h3>
-<textarea id="t17"></textarea>
-<button onclick="try{JSON.parse(t17.value);r17.innerText='JSON صحيح'}catch{r17.innerText='JSON خطأ'}">فحص</button>
-<div class="result" id="r17"></div></div>
-
-<!-- 18 -->
-<div class="tool"><h3>18️⃣ Binary Converter</h3>
-<input id="t18">
-<button onclick="r18.innerText=[...t18.value].map(c=>c.charCodeAt(0).toString(2)).join(' ')">تحويل</button>
-<div class="result" id="r18"></div></div>
-
-<!-- 19 -->
-<div class="tool"><h3>19️⃣ Hex Converter</h3>
-<input id="t19">
-<button onclick="r19.innerText=[...t19.value].map(c=>c.charCodeAt(0).toString(16)).join(' ')">تحويل</button>
-<div class="result" id="r19"></div></div>
-
-<!-- 20 -->
-<div class="tool"><h3>20️⃣ Random IP</h3>
-<button onclick="r20.innerText=[0,0,0,0].map(()=>Math.floor(Math.random()*255)).join('.')">Generate</button>
-<div class="result" id="r20"></div></div>
-
-<!-- 21 -->
-<div class="tool"><h3>21️⃣ Random Port</h3>
-<button onclick="r21.innerText=Math.floor(Math.random()*65535)">Generate</button>
-<div class="result" id="r21"></div></div>
-
-<!-- 22 -->
-<div class="tool"><h3>22️⃣ Regex Tester</h3>
-<input id="t22a" placeholder="Regex">
-<input id="t22b" placeholder="Text">
-<button onclick="r22.innerText=new RegExp(t22a.value).test(t22b.value)">Test</button>
-<div class="result" id="r22"></div></div>
-
-<!-- 23 -->
-<div class="tool"><h3>23️⃣ ASCII Codes</h3>
-<input id="t23">
-<button onclick="r23.innerText=[...t23.value].map(c=>c.charCodeAt(0)).join(' ')">Convert</button>
-<div class="result" id="r23"></div></div>
-
-<!-- 24 -->
-<div class="tool"><h3>24️⃣ Caesar Cipher</h3>
-<input id="t24">
-<button onclick="r24.innerText=t24.value.replace(/[a-z]/gi,c=>String.fromCharCode(c.charCodeAt(0)+3))">Encrypt</button>
-<div class="result" id="r24"></div></div>
-
-<!-- 25 -->
-<div class="tool"><h3>25️⃣ Browser Info</h3>
-<button onclick="r25.innerText=navigator.userAgent">عرض</button>
-<div class="result" id="r25"></div></div>
-
-<!-- 26 -->
-<div class="tool"><h3>26️⃣ Screen Resolution</h3>
-<button onclick="r26.innerText=screen.width+' x '+screen.height">عرض</button>
-<div class="result" id="r26"></div></div>
-
-<!-- 27 -->
-<div class="tool"><h3>27️⃣ Random Color</h3>
-<button onclick="r27.innerText='#'+Math.floor(Math.random()*16777215).toString(16)">Generate</button>
-<div class="result" id="r27"></div></div>
-
-<!-- 28 -->
-<div class="tool"><h3>28️⃣ Username Generator</h3>
-<button onclick="r28.innerText='user_'+Math.random().toString(36).substr(2,6)">Generate</button>
-<div class="result" id="r28"></div></div>
-
-<!-- 29 -->
-<div class="tool"><h3>29️⃣ Email Generator</h3>
-<button onclick="r29.innerText='user'+Math.floor(Math.random()*9999)+'@mail.com'">Generate</button>
-<div class="result" id="r29"></div></div>
-
-<!-- 30 -->
-<div class="tool"><h3>30️⃣ URL Split</h3>
-<input id="t30">
-<button onclick="r30.innerText=t30.value.split('/')">Split</button>
-<div class="result" id="r30"></div></div>
-
-<!-- 31 → 50 (معلومات وأوامر قانونية) -->
-<div class="tool"><h3>31️⃣ Nmap</h3><div class="result">nmap -sV target.com</div></div>
-<div class="tool"><h3>32️⃣ Whois</h3><div class="result">whois domain.com</div></div>
-<div class="tool"><h3>33️⃣ Ping</h3><div class="result">ping google.com</div></div>
-<div class="tool"><h3>34️⃣ Traceroute</h3><div class="result">traceroute google.com</div></div>
-<div class="tool"><h3>35️⃣ Netstat</h3><div class="result">netstat -tuln</div></div>
-<div class="tool"><h3>36️⃣ Curl</h3><div class="result">curl -I site.com</div></div>
-<div class="tool"><h3>37️⃣ Nikto</h3><div class="result">nikto -h site.com</div></div>
-<div class="tool"><h3>38️⃣ Wafw00f</h3><div class="result">wafw00f site.com</div></div>
-<div class="tool"><h3>39️⃣ Dirsearch</h3><div class="result">dirsearch -u site.com</div></div>
-<div class="tool"><h3>40️⃣ Subfinder</h3><div class="result">subfinder -d domain.com</div></div>
-<div class="tool"><h3>41️⃣ Amass</h3><div class="result">amass enum -d domain.com</div></div>
-<div class="tool"><h3>42️⃣ Httpx</h3><div class="result">httpx -l domains.txt</div></div>
-<div class="tool"><h3>43️⃣ Tcpdump</h3><div class="result">tcpdump -i eth0</div></div>
-<div class="tool"><h3>44️⃣ Nslookup</h3><div class="result">nslookup site.com</div></div>
-<div class="tool"><h3>45️⃣ Dig</h3><div class="result">dig site.com</div></div>
-<div class="tool"><h3>46️⃣ WhatWeb</h3><div class="result">whatweb site.com</div></div>
-<div class="tool"><h3>47️⃣ SQLmap</h3><div class="result">sqlmap -u URL --dbs</div></div>
-<div class="tool"><h3>48️⃣ Hydra</h3><div class="result">hydra -l user -P pass.txt</div></div>
-<div class="tool"><h3>49️⃣ John</h3><div class="result">john hash.txt</div></div>
-<div class="tool"><h3>50️⃣ Hping3</h3><div class="result">hping3 -S site.com</div></div>
+<div class="result" id="r8"></div>
+</div>
 
 </div>
 
@@ -287,9 +159,10 @@ footer a{
 
 <script>
 async function hash256(){
- let data=new TextEncoder().encode(t7.value);
- let hash=await crypto.subtle.digest("SHA-256",data);
- r7.innerText=[...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
+    let data = new TextEncoder().encode(t7.value);
+    let hash = await crypto.subtle.digest("SHA-256", data);
+    r7.innerText = [...new Uint8Array(hash)]
+        .map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 </script>
 
